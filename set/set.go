@@ -8,19 +8,44 @@ func NewSet() Set {
 }
 
 // Adds 'elem' to the Set
-func (s Set) Add(elem interface{}) {
-	s[elem] = struct{}{}
+func (S Set) Add(elem interface{}) {
+	S[elem] = struct{}{}
+}
+
+// Adds the list of elements to the set
+func (S Set) AddList(elements []interface{}) {
+	for _, elem := range elements {
+		S.Add(elem)
+	}
 }
 
 // Removes 'elem' from the Set
-func (s Set) Remove(elem interface{}) {
-	delete(s, elem)
+func (S Set) Remove(elem interface{}) {
+	delete(S, elem)
 }
 
 // Returns True if elem is in the Set
-func (s Set) Contains(elem interface{}) bool {
-	_, found := s[elem]
+func (S Set) Contains(elem interface{}) bool {
+	_, found := S[elem]
 	return found
+}
+
+// Returns the cardinality (size) of the set
+func (S Set) Cardinality() int {
+	return len(S)
+}
+
+func (S Set) Equal(other Set) bool {
+	if S.Cardinality() != other.Cardinality() {
+		return false
+	}
+
+	intersect := Intersection(S, other)
+	if intersect.Cardinality() != other.Cardinality() {
+		return false
+	}
+
+	return true
 }
 
 // Return an array of the set contents
@@ -35,8 +60,8 @@ func (S Set) Array() []interface{} {
 // Find the union of all the elements in every set
 func Union(sets ...Set) Set {
 	S := NewSet()
-	for _, s := range(sets) {
-		for elem := range(s) {
+	for _, s := range sets {
+		for elem := range s {
 			S.Add(elem)
 		}
 	}
@@ -46,9 +71,9 @@ func Union(sets ...Set) Set {
 // Take the intersection of all added sets
 func Intersection(sets ...Set) Set {
 	S := NewSet()
-	for elem := range(sets[0]) {
+	for elem := range sets[0] {
 		add := true
-		for _, s := range(sets[1:]) {
+		for _, s := range sets[1:] {
 			if !s.Contains(elem) {
 				add = false
 			}
@@ -61,9 +86,9 @@ func Intersection(sets ...Set) Set {
 }
 
 // Find the difference between A and all other sets
-func Difference (A Set, sets ...Set) Set {
-	for _, s := range(sets) {
-		for elem := range(s) {
+func Difference(A Set, sets ...Set) Set {
+	for _, s := range sets {
+		for elem := range s {
 			if A.Contains(elem) {
 				A.Remove(elem)
 			}
@@ -73,8 +98,8 @@ func Difference (A Set, sets ...Set) Set {
 }
 
 // Returns True if every element in s is in 'other'
-func (S Set) SubSet (other Set) bool {
-	for elem := range(S) {
+func (S Set) SubSet(other Set) bool {
+	for elem := range S {
 		if !other.Contains(elem) {
 			return false
 		}
@@ -83,8 +108,8 @@ func (S Set) SubSet (other Set) bool {
 }
 
 // Returns True if every element in 'other' is in S
-func (S Set) SuperSet (other Set) bool {
-	for elem := range(other) {
+func (S Set) SuperSet(other Set) bool {
+	for elem := range other {
 		if !S.Contains(elem) {
 			return false
 		}
@@ -93,13 +118,13 @@ func (S Set) SuperSet (other Set) bool {
 }
 
 // Returns True if S has no elements in common with 'other'
-func (S Set) IsDisjoint (other Set) bool {
-	for elem := range(S) {
+func (S Set) IsDisjoint(other Set) bool {
+	for elem := range S {
 		if other.Contains(elem) {
 			return false
 		}
 	}
-	for elem := range(other) {
+	for elem := range other {
 		if S.Contains(elem) {
 			return false
 		}
@@ -111,8 +136,8 @@ func (S Set) IsDisjoint (other Set) bool {
 // Returns a set with elements that are in one set, but not multiple
 func SymmetricDifferences(sets ...Set) Set {
 	counter := make(map[interface{}]int)
-	for _, s := range(sets) {
-		for elem := range(s) {
+	for _, s := range sets {
+		for elem := range s {
 			val, ok := counter[elem]
 			if ok {
 				counter[elem] = val + 1
@@ -123,11 +148,23 @@ func SymmetricDifferences(sets ...Set) Set {
 	}
 
 	S := NewSet()
-	for elem, count := range(counter) {
+	for elem, count := range counter {
 		if count == 1 {
 			S.Add(elem)
 		}
 	}
 
 	return S
+}
+
+// Returns a channel iterator for the set
+func (S Set) Iterator() chan interface{} {
+	c := make(chan interface{})
+	go func() {
+		for elem := range S {
+			c <- elem
+		}
+		close(c)
+	}()
+	return c
 }
