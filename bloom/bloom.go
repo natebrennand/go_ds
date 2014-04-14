@@ -6,8 +6,7 @@ type BloomFilter struct {
 }
 
 func NewBloomFilter(size uint64, hashes int) BloomFilter {
-	// x := BloomFilter{NewBigIntBitArray(size), hashes}
-	x := BloomFilter{NewByteArray(size), hashes}
+	x := BloomFilter{NewBigIntBitArray(size), hashes}
 	return x
 }
 
