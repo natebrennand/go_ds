@@ -6,7 +6,7 @@ import (
 )
 
 // adapted from http://bretmulvey.com/hash/7.html
-func ComputeHash(key interface{}) (uint, error) {
+func ComputeHash(key interface{}) (uint64, error) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(key)
@@ -15,67 +15,67 @@ func ComputeHash(key interface{}) (uint, error) {
 	}
 	data := buf.Bytes()
 
-	var a, b, c uint
+	var a, b, c uint64
 	a, b = 0x9e3779b9, 0x9e3779b9
 	c = 0
 	i := 0
 
 	for i = 0; i < len(data)-12; {
-		a += uint(data[i]) | uint(data[i+1]<<8) | uint(data[i+2]<<16) | uint(data[i+3]<<24)
+		a += uint64(data[i]) | uint64(data[i+1]<<8) | uint64(data[i+2]<<16) | uint64(data[i+3]<<24)
 		i += 4
-		b += uint(data[i]) | uint(data[i+1]<<8) | uint(data[i+2]<<16) | uint(data[i+3]<<24)
+		b += uint64(data[i]) | uint64(data[i+1]<<8) | uint64(data[i+2]<<16) | uint64(data[i+3]<<24)
 		i += 4
-		c += uint(data[i]) | uint(data[i+1]<<8) | uint(data[i+2]<<16) | uint(data[i+3]<<24)
+		c += uint64(data[i]) | uint64(data[i+1]<<8) | uint64(data[i+2]<<16) | uint64(data[i+3]<<24)
 
 		a, b, c = mix(a, b, c)
 	}
 
-	c += uint(len(data))
+	c += uint64(len(data))
 
 	if i < len(data) {
-		a += uint(data[i])
+		a += uint64(data[i])
 		i++
 	}
 	if i < len(data) {
-		a += uint(data[i]) << 8
+		a += uint64(data[i]) << 8
 		i++
 	}
 	if i < len(data) {
-		a += uint(data[i]) << 16
+		a += uint64(data[i]) << 16
 		i++
 	}
 	if i < len(data) {
-		a += uint(data[i]) << 24
-		i++
-	}
-
-	if i < len(data) {
-		b += uint(data[i])
-		i++
-	}
-	if i < len(data) {
-		b += uint(data[i]) << 8
-		i++
-	}
-	if i < len(data) {
-		b += uint(data[i]) << 16
-		i++
-	}
-	if i < len(data) {
-		b += uint(data[i]) << 24
+		a += uint64(data[i]) << 24
 		i++
 	}
 
 	if i < len(data) {
-		c += uint(data[i]) << 8
+		b += uint64(data[i])
 		i++
 	}
 	if i < len(data) {
-		c += uint(data[i]) << 16
+		b += uint64(data[i]) << 8
 		i++
 	}
 	if i < len(data) {
-		c += uint(data[i]) << 24
+		b += uint64(data[i]) << 16
+		i++
+	}
+	if i < len(data) {
+		b += uint64(data[i]) << 24
+		i++
+	}
+
+	if i < len(data) {
+		c += uint64(data[i]) << 8
+		i++
+	}
+	if i < len(data) {
+		c += uint64(data[i]) << 16
+		i++
+	}
+	if i < len(data) {
+		c += uint64(data[i]) << 24
 		i++
 	}
 
@@ -83,7 +83,7 @@ func ComputeHash(key interface{}) (uint, error) {
 	return c, nil
 }
 
-func mix(a, b, c uint) (uint, uint, uint) {
+func mix(a, b, c uint64) (uint64, uint64, uint64) {
 	a -= b
 	a -= c
 	a ^= (c >> 13)
