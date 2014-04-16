@@ -35,6 +35,7 @@ func (S Set) Cardinality() int {
 	return len(S)
 }
 
+// Returns true if the sets are found to be equivalent
 func (S Set) Equal(other Set) bool {
 	if S.Cardinality() != other.Cardinality() {
 		return false
