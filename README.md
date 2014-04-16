@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/natebrennand/go_ds.svg?branch=master)](https://travis-ci.org/natebrennand/go_ds)
+
 #Golang Data Structures
 
 
