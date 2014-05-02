@@ -21,7 +21,7 @@ func NewBigIntBitArray(size uint64) BigIntBitArray {
 }
 
 func (b BigIntBitArray) Get(index uint64) bool {
-	intNum := int(index / uint64(len(b))) % len(b)
+	intNum := int(index/uint64(len(b))) % len(b)
 	offset := int(index % 64)
 	if 1 == b[intNum].Bit(offset) {
 		return true
@@ -30,7 +30,7 @@ func (b BigIntBitArray) Get(index uint64) bool {
 }
 
 func (b BigIntBitArray) Set(index uint64) {
-	intNum := int(index / uint64(len(b))) % len(b)
+	intNum := int(index/uint64(len(b))) % len(b)
 	offset := int(index % 64)
 	b[intNum].SetBit(b[intNum], offset, 1)
 }

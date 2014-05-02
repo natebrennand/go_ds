@@ -5,8 +5,11 @@ import (
 	"encoding/gob"
 )
 
+type jenkinsHash struct {
+}
+
 // adapted from http://bretmulvey.com/hash/7.html
-func ComputeHash(key interface{}) (uint64, error) {
+func (_ jenkinsHash) ComputeHash(key interface{}) (uint64, error) {
 	var buf bytes.Buffer
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(key)
