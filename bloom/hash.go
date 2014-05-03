@@ -1,5 +1,5 @@
 package bloom
 
 type HashFn interface {
-	ComputeHash(key interface{}) (uint64, error)
+	ComputeHash([]byte) (uint64, error)
 }

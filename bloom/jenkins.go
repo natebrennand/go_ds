@@ -1,22 +1,9 @@
 package bloom
 
-import (
-	"bytes"
-	"encoding/gob"
-)
-
-type jenkinsHash struct {
-}
+type jenkinsHash struct{}
 
 // adapted from http://bretmulvey.com/hash/7.html
-func (_ jenkinsHash) ComputeHash(key interface{}) (uint64, error) {
-	var buf bytes.Buffer
-	enc := gob.NewEncoder(&buf)
-	err := enc.Encode(key)
-	if err != nil {
-		return 0, err
-	}
-	data := buf.Bytes()
+func (_ jenkinsHash) ComputeHash(data []byte) (uint64, error) {
 
 	var a, b, c uint64
 	a, b = 0x9e3779b9, 0x9e3779b9
