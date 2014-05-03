@@ -31,7 +31,6 @@ func TestJenkins(t *testing.T) {
 
 func BenchmarkJenkins(b *testing.B) {
 	j := jenkinsHash{}
-
 	for i := 0; i < b.N; i++ {
 		j.ComputeHash([]byte{byte(i)})
 	}
