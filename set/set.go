@@ -41,7 +41,7 @@ func (S Set) Equal(other Set) bool {
 		return false
 	}
 
-	intersect := Intersection(S, other)
+	intersect := S.Intersection(other)
 	if intersect.Cardinality() != other.Cardinality() {
 		return false
 	}
@@ -59,43 +59,45 @@ func (S Set) Array() []interface{} {
 }
 
 // Find the union of all the elements in every set
-func Union(sets ...Set) Set {
-	S := NewSet()
-	for _, s := range sets {
+func (S Set) Union(sets ...Set) Set {
+	A := NewSet()
+	for _, s := range append(sets, S) {
 		for elem := range s {
-			S.Add(elem)
+			A.Add(elem)
 		}
 	}
-	return S
+	return A
 }
 
 // Take the intersection of all added sets
-func Intersection(sets ...Set) Set {
-	S := NewSet()
-	for elem := range sets[0] {
+func (S Set) Intersection(sets ...Set) Set {
+	A := NewSet()
+	for elem := range S {
 		add := true
-		for _, s := range sets[1:] {
+		for _, s := range sets {
 			if !s.Contains(elem) {
 				add = false
 			}
 		}
 		if add {
-			S.Add(elem)
-		}
-	}
-	return S
-}
-
-// Find the difference between A and all other sets
-func Difference(A Set, sets ...Set) Set {
-	for _, s := range sets {
-		for elem := range s {
-			if A.Contains(elem) {
-				A.Remove(elem)
-			}
+			A.Add(elem)
 		}
 	}
 	return A
+}
+
+// Find the difference between A and all other sets
+func (S Set) Difference(sets ...Set) Set {
+	A := NewSet()
+	A.AddList(S.Array())
+	for _, s := range sets {
+		for elem := range s {
+			if S.Contains(elem) {
+				S.Remove(elem)
+			}
+		}
+	}
+	return S
 }
 
 // Returns True if every element in s is in 'other'
@@ -119,18 +121,12 @@ func (S Set) SuperSet(other Set) bool {
 }
 
 // Returns True if S has no elements in common with 'other'
-func (S Set) IsDisjoint(other Set) bool {
+func (S Set) Disjoint(other Set) bool {
 	for elem := range S {
 		if other.Contains(elem) {
 			return false
 		}
 	}
-	for elem := range other {
-		if S.Contains(elem) {
-			return false
-		}
-	}
-
 	return true
 }
 

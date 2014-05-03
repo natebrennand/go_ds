@@ -29,12 +29,12 @@ Implements all methods from the [Python](https://docs.python.org/2/library/stdty
 (S Set) Cardinality() int 
 (S Set) Equal(other Set) bool
 (S Set) Array() []interface{}
-Union(sets ...Set) Set
-Intersection(sets ...Set) Set
-Difference(A Set, sets ...Set) Set
+(S Set) Union(sets ...Set) Set
+(S Set) Intersection(sets ...Set) Set
+(S Set) Difference(sets ...Set) Set
 (S Set) SubSet(other Set) bool
 (S Set) SuperSet(other Set) bool
-(S Set) IsDisjoint(other Set) bool
+(S Set) Disjoint(other Set) bool
 SymmetricDifferences(sets ...Set) Set
 (S Set) Iterator() chan interface{}
 ```
