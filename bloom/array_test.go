@@ -4,6 +4,7 @@ import (
 	"math"
 	"math/big"
 	"testing"
+	"fmt"
 )
 
 func getPowerOf2(x int) int {
@@ -23,6 +24,19 @@ func TestBigIntNewArray(t *testing.T) {
 	size = 6
 	arr = NewBigIntBitArray(size)
 	if len(arr)*64 != getPowerOf2(size) {
+		t.Errorf("Expected %d bits, found %d",
+			getPowerOf2(size),
+			len(arr)*64,
+		)
+	}
+}
+
+func TestBigIntNewArraySmall(t *testing.T) {
+	size := 2
+	arr := NewBigIntBitArray(size)
+
+	if len(arr)*64 != getPowerOf2(6) {
+		t.Errorf("Expected the array to default to one BigInt")
 		t.Errorf("Expected %d bits, found %d",
 			getPowerOf2(size),
 			len(arr)*64,
@@ -73,5 +87,23 @@ func TestBigIntBitArraySet(t *testing.T) {
 		if arr[0].Int64() != int64(getPowerOf2(indexPower2+1)-1) {
 			t.Errorf("Expected all bits up to %d to be set.", indexPower2)
 		}
+	}
+}
+
+func TestPrintArray(t *testing.T) {
+	size := 6
+	arr := NewBigIntBitArray(size)
+
+	expectedString := fmt.Sprintf("000: %064b\n", uint64(0))
+	if expectedString != arr.Print() {
+		t.Errorf("Error testing Print()\nExpected:%s\nRecieved:%s", expectedString, arr.Print())
+	}
+
+
+	size = 7
+	arr = NewBigIntBitArray(size)
+	expectedString = fmt.Sprintf("000: %064b\n001: %064b\n", uint64(0), uint64(0))
+	if expectedString != arr.Print() {
+		t.Errorf("Error testing Print()\nExpected:%s\nRecieved:%s", expectedString, arr.Print())
 	}
 }

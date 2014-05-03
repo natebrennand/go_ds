@@ -8,7 +8,7 @@ import (
 type BitArray interface {
 	Get(uint64) bool
 	Set(uint64)
-	Print()
+	Print() string
 }
 
 type BigIntBitArray []*big.Int
@@ -28,9 +28,10 @@ func (b BigIntBitArray) getIndexes(index uint64) (int, int) {
 func NewBigIntBitArray(size int) BigIntBitArray {
 	// guarantee at least 1 bucket
 	pow2 := uint(size - BITS_PER_INT_POWER_2)
-	if pow2 < 0 {
+	if size - BITS_PER_INT_POWER_2 < 0 {
 		pow2 = uint(0)
 	}
+
 	// shift for # of bits
 	numBuckets := (1 << uint(pow2))
 	arr := make(BigIntBitArray, numBuckets)
@@ -53,8 +54,10 @@ func (b BigIntBitArray) Set(index uint64) {
 }
 
 // print representation of the bit array, 64bit lines
-func (b BigIntBitArray) Print() {
+func (b BigIntBitArray) Print() string {
+	printString := ""
 	for i, block := range b {
-		fmt.Printf("%03d: %064b\n", i, block)
+		printString += fmt.Sprintf("%03d: %064b\n", i, block)
 	}
+	return printString
 }
