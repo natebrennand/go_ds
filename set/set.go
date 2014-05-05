@@ -131,9 +131,9 @@ func (S Set) Disjoint(other Set) bool {
 }
 
 // Returns a set with elements that are in one set, but not multiple
-func SymmetricDifferences(sets ...Set) Set {
+func (S Set) SymmetricDifferences(sets ...Set) Set {
 	counter := make(map[interface{}]int)
-	for _, s := range sets {
+	for _, s := range append(sets, S) {
 		for elem := range s {
 			val, ok := counter[elem]
 			if ok {
@@ -144,14 +144,14 @@ func SymmetricDifferences(sets ...Set) Set {
 		}
 	}
 
-	S := NewSet()
+	X := NewSet()
 	for elem, count := range counter {
 		if count == 1 {
-			S.Add(elem)
+			X.Add(elem)
 		}
 	}
 
-	return S
+	return X
 }
 
 // Returns a channel iterator for the set

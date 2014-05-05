@@ -35,7 +35,7 @@ Implements all methods from the [Python](https://docs.python.org/2/library/stdty
 (S Set) SubSet(other Set) bool
 (S Set) SuperSet(other Set) bool
 (S Set) Disjoint(other Set) bool
-SymmetricDifferences(sets ...Set) Set
+(S Set) SymmetricDifferences(sets ...Set) Set
 (S Set) Iterator() chan interface{}
 ```
 

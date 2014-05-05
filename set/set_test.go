@@ -23,7 +23,7 @@ func TestNewSet(t *testing.T) {
 
 func TestAdd(t *testing.T) {
 	s := NewSet()
-	elements := []int{1,2,3,4,5}
+	elements := []int{1, 2, 3, 4, 5}
 
 	for _, i := range elements {
 		s.Add(i)
@@ -52,7 +52,7 @@ func TestAddList(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	elements := []int{1,2,3,4,5}
+	elements := []int{1, 2, 3, 4, 5}
 	s := newTestSet(elements)
 
 	for _, i := range elements {
@@ -64,7 +64,7 @@ func TestRemove(t *testing.T) {
 }
 
 func TestContains(t *testing.T) {
-	elements := []int{1,2,3,4,5}
+	elements := []int{1, 2, 3, 4, 5}
 	s := newTestSet(elements)
 
 	for _, i := range elements {
@@ -79,7 +79,7 @@ func TestContains(t *testing.T) {
 }
 
 func TestCardinality(t *testing.T) {
-	elements := []int{1,2,3,4,5}
+	elements := []int{1, 2, 3, 4, 5}
 	s := NewSet()
 
 	for _, i := range elements {
@@ -91,9 +91,9 @@ func TestCardinality(t *testing.T) {
 }
 
 func TestEqual(t *testing.T) {
-	elements := []int{1,2,3,4,5}
-	elements2 := []int{6,7,8,9,10}
-	elements3 := []int{6,7,8,9,10,11,12,13}
+	elements := []int{1, 2, 3, 4, 5}
+	elements2 := []int{6, 7, 8, 9, 10}
+	elements3 := []int{6, 7, 8, 9, 10, 11, 12, 13}
 	s := newTestSet(elements)
 	a := newTestSet(elements)
 	b := newTestSet(elements2)
@@ -113,7 +113,7 @@ func TestEqual(t *testing.T) {
 }
 
 func TestArray(t *testing.T) {
-	elements := []int{1,2,3,4,5}
+	elements := []int{1, 2, 3, 4, 5}
 	s := newTestSet(elements)
 
 	a := s.Array()
@@ -132,12 +132,11 @@ func TestArray(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	elements := []int{1,2,3,4,5}
-	elements2 := []int{6,7,8,9,10}
+	elements := []int{1, 2, 3, 4, 5}
+	elements2 := []int{6, 7, 8, 9, 10}
 	a := newTestSet(elements)
 	b := newTestSet(elements2)
 	c := newTestSet(append(elements, elements2...))
-
 
 	s := a.Union(b)
 	if !s.Equal(c) {
@@ -149,13 +148,12 @@ func TestUnion(t *testing.T) {
 }
 
 func TestIntersection(t *testing.T) {
-	elements := []int{4,5,6,7}
-	elements2 := []int{1,2,3,4,5,6,7}
-	elements3 := []int{4,5,6,7,8,9,10}
+	elements := []int{4, 5, 6, 7}
+	elements2 := []int{1, 2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
 	a := newTestSet(elements2)
 	b := newTestSet(elements3)
 	c := newTestSet(elements)
-
 
 	s := a.Intersection(b)
 	if !s.Equal(c) {
@@ -167,13 +165,12 @@ func TestIntersection(t *testing.T) {
 }
 
 func TestDifference(t *testing.T) {
-	elements := []int{1,2,3}
-	elements2 := []int{1,2,3,4,5,6,7}
-	elements3 := []int{4,5,6,7,8,9,10}
+	elements := []int{1, 2, 3}
+	elements2 := []int{1, 2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
 	c := newTestSet(elements)
 	a := newTestSet(elements2)
 	b := newTestSet(elements3)
-
 
 	s := a.Difference(b)
 	if !s.Equal(c) {
@@ -185,9 +182,9 @@ func TestDifference(t *testing.T) {
 }
 
 func TestSubSet(t *testing.T) {
-	elements := []int{1,2,3}
-	elements2 := []int{1,2,3,4,5,6,7}
-	elements3 := []int{4,5,6,7,8,9,10}
+	elements := []int{1, 2, 3}
+	elements2 := []int{1, 2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
 	a := newTestSet(elements)
 	b := newTestSet(elements2)
 	c := newTestSet(elements3)
@@ -210,9 +207,9 @@ func TestSubSet(t *testing.T) {
 }
 
 func TestSuperSet(t *testing.T) {
-	elements := []int{1,2,3}
-	elements2 := []int{1,2,3,4,5,6,7}
-	elements3 := []int{4,5,6,7,8,9,10}
+	elements := []int{1, 2, 3}
+	elements2 := []int{1, 2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
 	a := newTestSet(elements)
 	b := newTestSet(elements2)
 	c := newTestSet(elements3)
@@ -235,9 +232,9 @@ func TestSuperSet(t *testing.T) {
 }
 
 func TestDisjoint(t *testing.T) {
-	elements := []int{1,2,3}
-	elements2 := []int{1,2,3,4,5,6,7}
-	elements3 := []int{4,5,6,7,8,9,10}
+	elements := []int{1, 2, 3}
+	elements2 := []int{1, 2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
 	a := newTestSet(elements)
 	b := newTestSet(elements2)
 	c := newTestSet(elements3)
@@ -250,5 +247,42 @@ func TestDisjoint(t *testing.T) {
 	}
 	if a.Disjoint(b) {
 		t.Errorf("Should not be a superset")
+	}
+}
+
+func TestSymmetricDifferences(t *testing.T) {
+	elements1 := []int{1, 2, 3}
+	elements2 := []int{2, 3, 4, 5, 6, 7}
+	elements3 := []int{4, 5, 6, 7, 8, 9, 10}
+	a := newTestSet(elements1)
+	b := newTestSet(elements2)
+	c := newTestSet(elements3)
+
+	expected := newTestSet([]int{1, 8, 9, 10})
+	generated := a.SymmetricDifferences(b, c)
+
+	if !expected.Equal(generated) {
+		t.Errorf("Error making calculating Symmetric Differences\nExepected: %#v\nRecieved: %#v",
+			expected,
+			generated,
+		)
+	}
+}
+
+func TestIterator(t *testing.T) {
+	elements := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	a := newTestSet(elements)
+	aChan := a.Iterator()
+
+	recieved := NewSet()
+	for i := 0; i < len(elements); i++ {
+		recieved.Add(<-aChan)
+	}
+
+	if !recieved.Equal(a) {
+		t.Errorf("Error using Iterator()\nExepected: %#v\nRecieved: %#v",
+			a,
+			recieved,
+		)
 	}
 }
