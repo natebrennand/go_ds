@@ -1,10 +1,10 @@
 package bloom
 
 import (
+	"fmt"
 	"math"
 	"math/big"
 	"testing"
-	"fmt"
 )
 
 func getPowerOf2(x int) int {
@@ -98,7 +98,6 @@ func TestPrintArray(t *testing.T) {
 	if expectedString != arr.Print() {
 		t.Errorf("Error testing Print()\nExpected:%s\nRecieved:%s", expectedString, arr.Print())
 	}
-
 
 	size = 7
 	arr = NewBigIntBitArray(size)

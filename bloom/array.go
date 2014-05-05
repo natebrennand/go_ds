@@ -28,7 +28,7 @@ func (b BigIntBitArray) getIndexes(index uint64) (int, int) {
 func NewBigIntBitArray(size int) BigIntBitArray {
 	// guarantee at least 1 bucket
 	pow2 := uint(size - BITS_PER_INT_POWER_2)
-	if size - BITS_PER_INT_POWER_2 < 0 {
+	if size-BITS_PER_INT_POWER_2 < 0 {
 		pow2 = uint(0)
 	}
 
