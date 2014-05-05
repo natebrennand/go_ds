@@ -1,6 +1,5 @@
 
 [![Build Status](https://travis-ci.org/natebrennand/go_ds.svg?branch=master)](https://travis-ci.org/natebrennand/go_ds)
-[![Coverage Status](https://coveralls.io/repos/natebrennand/go_ds/badge.png)](https://coveralls.io/r/natebrennand/go_ds)
 
 #Golang Data Structures
 
